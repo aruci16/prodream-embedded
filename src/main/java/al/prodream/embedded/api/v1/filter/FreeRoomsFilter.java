@@ -1,4 +1,4 @@
-package al.prodream.embedded.api.v1.filters;
+package al.prodream.embedded.api.v1.filter;
 
 /**
  * @author aleksruci on 14/Nov/2019
@@ -60,14 +60,8 @@ public class FreeRoomsFilter extends Filter {
             filter.addQueryParam("nrChildren", nrChildren);
             filter.addQueryParam("nrRooms", nrRooms);
 
-
             //todo if null values don't include in the filter
-//            filter.put("hotelId", String.valueOf(hotelId));
-//            filter.put("checkIn", String.valueOf(checkIn));
-//            filter.put("checkOut", String.valueOf(checkOut));
-//            filter.put("nrAdults", String.valueOf(nrAdults));
-//            filter.put("nrChildren", String.valueOf(nrChildren));
-//            filter.put("nrRooms", String.valueOf(nrRooms));
+
             return filter;
         }
     }

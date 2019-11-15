@@ -1,9 +1,8 @@
 package al.prodream.embedded.api.v1.consumers;
 
-import al.prodream.embedded.api.v1.filters.Filter;
-import al.prodream.embedded.api.v1.filters.PathParam;
-import al.prodream.embedded.api.v1.filters.QueryParam;
-import org.springframework.http.ResponseEntity;
+import al.prodream.embedded.api.v1.filter.Filter;
+import al.prodream.embedded.api.v1.filter.PathParam;
+import al.prodream.embedded.api.v1.filter.QueryParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -12,7 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 class ResourceConsumer {
 
-    private static final String BASE_URI = "https://petstore.swagger.io";
+    private static final String BASE_URI = "https://prodream.al";
 
     static final String V1_BASE_URI = BASE_URI + "/v2";
 
@@ -23,17 +22,17 @@ class ResourceConsumer {
     }
 
     <T> T consumeGet(String uri, Filter filter, Class<T> clazz) {
-        String requestUri = getUriComponentsBuilder(uri, filter);
+        String requestUri = buildUri(uri, filter);
 
         return restTemplate.getForObject(requestUri, clazz);
     }
 
-    <T> void consumePost(String uri, T object) {
+    <T> T consumePost(String uri, T object, Class<T> clazz) {
 
-        restTemplate.postForObject(uri, object, ResponseEntity.class);
+        return restTemplate.postForObject(uri, object, clazz);
     }
 
-    private String getUriComponentsBuilder(String uri, Filter filter) {
+    private String buildUri(String uri, Filter filter) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(uri);
 
         for (PathParam param : filter.getPathParams()) {

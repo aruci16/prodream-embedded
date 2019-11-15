@@ -1,4 +1,4 @@
-package al.prodream.embedded.api.v1.filters;
+package al.prodream.embedded.api.v1.filter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +37,11 @@ public class Filter {
         return queryParams;
     }
 
-    void addQueryParam(String name, Long value) {
+    void addQueryParam(String name, int value) {
         addQueryParam(name, String.valueOf(value));
     }
 
-    void addQueryParam(String name, int value) {
+    void addQueryParam(String name, Long value) {
         addQueryParam(name, String.valueOf(value));
     }
 

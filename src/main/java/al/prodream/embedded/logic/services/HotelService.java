@@ -1,8 +1,8 @@
 package al.prodream.embedded.logic.services;
 
 import al.prodream.embedded.api.v1.consumers.HotelResourceConsumer;
-import al.prodream.embedded.api.v1.dto.PetDTO;
-import al.prodream.embedded.api.v1.filters.PetFilter;
+import al.prodream.embedded.api.v1.dto.RoomDTO;
+import al.prodream.embedded.api.v1.filter.FreeRoomsFilter;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,11 +18,7 @@ public class HotelService {
         this.hotelResourceConsumer = hotelResourceConsumer;
     }
 
-    public PetDTO getPet(PetFilter filter) {
-        return hotelResourceConsumer.getPet(filter);
-    }
-
-    public void postPet(PetDTO petDTO) {
-        hotelResourceConsumer.postPet(petDTO);
+    public RoomDTO[] getFreeRooms(FreeRoomsFilter filter) {
+        return hotelResourceConsumer.getFreeRooms(filter);
     }
 }

@@ -1,4 +1,4 @@
-package al.prodream.embedded.api.v1.filters;
+package al.prodream.embedded.api.v1.filter;
 
 import lombok.AllArgsConstructor;
 

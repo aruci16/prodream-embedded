@@ -1,7 +1,7 @@
 package al.prodream.embedded.api.v1.controllers;
 
-import al.prodream.embedded.api.v1.dto.PetDTO;
-import al.prodream.embedded.api.v1.filters.PetFilter;
+import al.prodream.embedded.api.v1.dto.RoomDTO;
+import al.prodream.embedded.api.v1.filter.FreeRoomsFilter;
 import al.prodream.embedded.logic.services.HotelService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/api/v2/pet")
+@RequestMapping("/api/v1/hotels")
 public class HotelController {
 
     private final HotelService hotelService;
@@ -23,23 +23,25 @@ public class HotelController {
 
     //TODO what if no filter specified for a value
 
-    @GetMapping(value = "/{petId}/{checkIn}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public PetDTO getPet(@PathVariable Long petId,
-                         @PathVariable Long checkIn) {
+    public RoomDTO[] getFreeRooms(@PathVariable Long hotelId, // TODO try to specify string hotelId
+                                  @RequestParam(required = false, defaultValue = "") Long checkIn,
+                                  @RequestParam(required = false) Long checkOut,
+                                  @RequestParam(required = false, defaultValue = "1") int nrAdults,
+                                  @RequestParam(required = false, defaultValue = "0") int nrChildren,
+                                  @RequestParam(required = false, defaultValue = "1") int nrRooms) {
 
-        PetFilter filter = PetFilter.builder().petId(petId).number(checkIn).build();
+        FreeRoomsFilter filter = FreeRoomsFilter.builder().hotelId(hotelId)
+                .checkIn(checkIn)
+                .checkOut(checkOut)
+                .nrAdults(nrAdults)
+                .nrChildren(nrChildren)
+                .nrRooms(nrRooms)
+                .build();
 
-        return hotelService.getPet(filter);
-    }
-
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public void postPet(@RequestBody PetDTO pet) {
-
-        hotelService.postPet(pet);
+        return hotelService.getFreeRooms(filter);
     }
 
     //TODO make it consume every type of represantation

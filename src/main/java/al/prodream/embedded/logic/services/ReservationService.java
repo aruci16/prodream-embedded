@@ -17,8 +17,8 @@ public class ReservationService {
         this.hotelResourceConsumer = hotelResourceConsumer;
     }
 
-    public void createReservation(ReservationDTO reservation) {
-        hotelResourceConsumer.createReservation(reservation);
+    public ReservationDTO createReservation(ReservationDTO reservation) {
+        return hotelResourceConsumer.createReservation(reservation);
     }
 
 }
