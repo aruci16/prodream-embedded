@@ -1,8 +1,8 @@
 package al.prodream.embedded.api.v1.consumers;
 
 import al.prodream.embedded.api.v1.dto.ReservationDTO;
-import al.prodream.embedded.api.v1.dto.RoomDTO;
-import al.prodream.embedded.api.v1.filters.FreeRoomsFilter;
+import al.prodream.embedded.api.v1.dto.PetDTO;
+import al.prodream.embedded.api.v1.filters.PetFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,14 +13,14 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class HotelResourceConsumer extends ResourceConsumer {
 
-    private static final String RESOURCE_URI = V1_BASE_URI + "/hotel";
+    private static final String RESOURCE_URI = V1_BASE_URI + "/pet";
 
     public HotelResourceConsumer(RestTemplate restTemplate) {
         super(restTemplate);
     }
 
-    public RoomDTO[] getFreeRooms(FreeRoomsFilter filter) {
-        return consumeGet(RESOURCE_URI + "/getFreeRooms", filter, RoomDTO[].class);
+    public PetDTO getPet(PetFilter filter) {
+        return consumeGet(RESOURCE_URI, filter, PetDTO.class);
     }
 
     public void createReservation(ReservationDTO reservationDTO) {

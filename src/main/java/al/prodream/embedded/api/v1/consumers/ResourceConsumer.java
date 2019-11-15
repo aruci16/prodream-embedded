@@ -12,9 +12,9 @@ import java.util.Map;
  */
 class ResourceConsumer {
 
-    private static final String BASE_URI = "http://prodream.al";
+    private static final String BASE_URI = "https://petstore.swagger.io";
 
-    static final String V1_BASE_URI = BASE_URI + "/v1";
+    static final String V1_BASE_URI = BASE_URI + "/v2";
 
     private final RestTemplate restTemplate;
 
@@ -27,10 +27,12 @@ class ResourceConsumer {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(uri);
 
         for (Map.Entry<String, String> entry : filter.getMap().entrySet()) {
-            builder = builder.queryParam(entry.getKey(), entry.getValue());
+            builder.path(entry.getValue());
+//            builder = builder.queryParam(entry.getKey(), entry.getValue());
         }
 
-        return restTemplate.getForObject(builder.toUriString(), clazz);
+        String url = builder.toUriString();
+        return restTemplate.getForObject(url, clazz);
     }
 
     <T> void consumePost(String uri, T object) {
