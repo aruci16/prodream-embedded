@@ -1,11 +1,11 @@
 package al.prodream.embedded.api.v1.consumers;
 
 import al.prodream.embedded.api.v1.filters.Filter;
+import al.prodream.embedded.api.v1.filters.PathParam;
+import al.prodream.embedded.api.v1.filters.QueryParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.Map;
 
 /**
  * @author aleksruci on 14/Nov/2019
@@ -23,19 +23,27 @@ class ResourceConsumer {
     }
 
     <T> T consumeGet(String uri, Filter filter, Class<T> clazz) {
+        String requestUri = getUriComponentsBuilder(uri, filter);
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(uri);
-
-        for (Map.Entry<String, String> entry : filter.getMap().entrySet()) {
-            builder.path(entry.getValue());
-//            builder = builder.queryParam(entry.getKey(), entry.getValue());
-        }
-
-        String url = builder.toUriString();
-        return restTemplate.getForObject(url, clazz);
+        return restTemplate.getForObject(requestUri, clazz);
     }
 
     <T> void consumePost(String uri, T object) {
+
         restTemplate.postForObject(uri, object, ResponseEntity.class);
+    }
+
+    private String getUriComponentsBuilder(String uri, Filter filter) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(uri);
+
+        for (PathParam param : filter.getPathParams()) {
+                builder = builder.path(param.getPath());
+        }
+
+        for (QueryParam param : filter.getQueryParams()) {
+            builder = builder.queryParam(param.getName(), param.getValue());
+        }
+
+        return builder.toUriString();
     }
 }

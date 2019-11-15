@@ -15,16 +15,24 @@ public class PetFilter extends Filter {
 
     public static class Builder {
         private Long petId;
+        private Long number;
 
         public Builder petId(Long petId) {
             this.petId = petId;
             return this;
         }
 
+        public Builder number(Long number) {
+            this.number = number;
+            return this;
+        }
+
         public PetFilter build() {
             PetFilter filter = new PetFilter();
-            //todo if null values don't include in the filter
-            filter.put("petId", "/" + petId);
+
+            filter.addPathParam(petId, 1);
+            filter.addPathParam("number", number, 2);
+
             return filter;
         }
     }

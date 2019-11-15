@@ -21,4 +21,8 @@ public class HotelService {
     public PetDTO getPet(PetFilter filter) {
         return hotelResourceConsumer.getPet(filter);
     }
+
+    public void postPet(PetDTO petDTO) {
+        hotelResourceConsumer.postPet(petDTO);
+    }
 }

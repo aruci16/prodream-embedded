@@ -23,14 +23,23 @@ public class HotelController {
 
     //TODO what if no filter specified for a value
 
-    @GetMapping(value = "/{petId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{petId}/{checkIn}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public PetDTO getPet(@PathVariable Long petId) {
+    public PetDTO getPet(@PathVariable Long petId,
+                         @PathVariable Long checkIn) {
 
-        PetFilter filter = PetFilter.builder().petId(petId).build();
+        PetFilter filter = PetFilter.builder().petId(petId).number(checkIn).build();
 
         return hotelService.getPet(filter);
+    }
+
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void postPet(@RequestBody PetDTO pet) {
+
+        hotelService.postPet(pet);
     }
 
     //TODO make it consume every type of represantation

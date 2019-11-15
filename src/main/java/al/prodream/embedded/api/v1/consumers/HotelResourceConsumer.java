@@ -23,6 +23,10 @@ public class HotelResourceConsumer extends ResourceConsumer {
         return consumeGet(RESOURCE_URI, filter, PetDTO.class);
     }
 
+    public void postPet(PetDTO petDTO) {
+        consumePost(RESOURCE_URI, petDTO);
+    }
+
     public void createReservation(ReservationDTO reservationDTO) {
         consumePost(RESOURCE_URI + "/createReservation", reservationDTO);
     }

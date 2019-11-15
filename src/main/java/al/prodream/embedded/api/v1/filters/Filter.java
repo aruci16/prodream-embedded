@@ -1,23 +1,51 @@
 package al.prodream.embedded.api.v1.filters;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * @author aleksruci on 14/Nov/2019
  */
 public class Filter {
-    private Map<String, String> map;
+    private Queue<PathParam> pathParams;
+    private List<QueryParam> queryParams;
 
     Filter() {
-        map = new HashMap<>();
+        pathParams = new PriorityQueue<>();
+        queryParams = new ArrayList<>();
     }
 
-    void put(String key, String value) {
-        map.put(key, value);
+    public Queue<PathParam> getPathParams() {
+        return pathParams;
     }
 
-    public Map<String, String> getMap() {
-        return map;
+    void addPathParam(String resourcePath, String documentIdentifier, int position) {
+        pathParams.add(new PathParam(resourcePath, documentIdentifier, position));
+    }
+
+    void addPathParam(Long documentIdentifier, int position) {
+        addPathParam(null, String.valueOf(documentIdentifier), position);
+    }
+
+    void addPathParam(String resourcePath, Long documentIdentifier, int position) {
+        addPathParam(resourcePath, String.valueOf(documentIdentifier), position);
+    }
+
+    public List<QueryParam> getQueryParams() {
+        return queryParams;
+    }
+
+    void addQueryParam(String name, Long value) {
+        addQueryParam(name, String.valueOf(value));
+    }
+
+    void addQueryParam(String name, int value) {
+        addQueryParam(name, String.valueOf(value));
+    }
+
+    void addQueryParam(String name, String value) {
+        queryParams.add(new QueryParam(name, value));
     }
 }
